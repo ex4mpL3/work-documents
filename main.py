@@ -1,17 +1,6 @@
 from user_interface import Message
 from command_manager import command_manager
-from exceptions import (
-    AddShelfFailed,
-    MoveDocumentFailed,
-    DeleteDocumentFromDirectoriesFailed,
-    DeleteDocumentFromDocumentsFailed,
-    DeleteDocumentFromAllFailed,
-    AddDocumentFailed,
-    ShelfNumberNotFound,
-    OwnerNumberNotFound,
-    CommandNotFound,
-    TypeNumberNotFound,
-)
+import exceptions
 
 
 if __name__ == "__main__":
@@ -23,16 +12,16 @@ if __name__ == "__main__":
         try:
             command_manager.get_command(name=input_command)()
         except (
-                AddShelfFailed,
-                MoveDocumentFailed,
-                DeleteDocumentFromDirectoriesFailed,
-                DeleteDocumentFromDocumentsFailed,
-                DeleteDocumentFromAllFailed,
-                AddDocumentFailed,
-                ShelfNumberNotFound,
-                OwnerNumberNotFound,
-                TypeNumberNotFound,
+                exceptions.AddShelfFailed,
+                exceptions.MoveDocumentFailed,
+                exceptions.DeleteDocumentFromDirectoriesFailed,
+                exceptions.DeleteDocumentFromDocumentsFailed,
+                exceptions.DeleteDocumentFromAllFailed,
+                exceptions.AddDocumentFailed,
+                exceptions.ShelfNumberNotFound,
+                exceptions.OwnerNumberNotFound,
+                exceptions.TypeNumberNotFound,
         ) as f:
             Message.error_message(f)
-        except CommandNotFound as f:
+        except exceptions.CommandNotFound as f:
             Message.command_not_found_message(f)

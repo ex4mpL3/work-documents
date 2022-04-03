@@ -1,14 +1,6 @@
 from user_interface import Message
 from services.work_documents_service import DocumentWork
-from exceptions import (
-    AddShelfFailed,
-    MoveDocumentFailed,
-    DeleteDocumentFromAllFailed,
-    AddDocumentFailed,
-    ShelfNumberNotFound,
-    OwnerNumberNotFound,
-    TypeNumberNotFound,
-)
+import exceptions
 from data import documents
 from services.commands_service import (
     commands_set,
@@ -29,7 +21,7 @@ class DocumentWorkController:
         if document_number:
             return Message.message(text=commands_set['g'].text_result,
                                    value=document_number)
-        raise TypeNumberNotFound
+        raise exceptions.TypeNumberNotFound
 
     @staticmethod
     def c_get_document_owner_by_number():
@@ -40,7 +32,7 @@ class DocumentWorkController:
         if document_number:
             return Message.message(text=commands_set['p'].text_result,
                                    value=document_number)
-        raise OwnerNumberNotFound
+        raise exceptions.OwnerNumberNotFound
 
     @staticmethod
     def c_get_shelf_by_number_input_value():
@@ -51,7 +43,7 @@ class DocumentWorkController:
         if document_number:
             return Message.message(text=commands_set['s'].text_result,
                                    value=document_number)
-        raise ShelfNumberNotFound
+        raise exceptions.ShelfNumberNotFound
 
     @staticmethod
     def c_add_document_with_input_value():
@@ -61,7 +53,7 @@ class DocumentWorkController:
         try:
             DocumentWork.add_document_with_input_value()
         except KeyError:
-            raise AddDocumentFailed
+            raise exceptions.AddDocumentFailed
 
     @staticmethod
     def c_add_shelf_with_input_value():
@@ -71,7 +63,7 @@ class DocumentWorkController:
         try:
             DocumentWork.add_shelf_with_input_value()
         except KeyError:
-            raise AddShelfFailed
+            raise exceptions.AddShelfFailed
 
     @staticmethod
     def c_move_document_with_input_value():
@@ -81,7 +73,7 @@ class DocumentWorkController:
         try:
             DocumentWork.move_document_with_input_value()
         except (KeyError, ValueError):
-            raise MoveDocumentFailed
+            raise exceptions.MoveDocumentFailed
 
     @staticmethod
     def c_delete_document_with_input_value():
@@ -91,7 +83,7 @@ class DocumentWorkController:
         try:
             DocumentWork.delete_document_from_all_with_input_value()
         except ValueError:
-            raise DeleteDocumentFromAllFailed
+            raise exceptions.DeleteDocumentFromAllFailed
 
     @staticmethod
     def c_show_all_owner() -> None:
